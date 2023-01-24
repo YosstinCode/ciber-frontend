@@ -1,0 +1,49 @@
+<div class="w-72 md:w-60">
+    <mat-card class=" flex w-72 md:w-60 h-56" [ngClass]="{'gap-y-10': !isClickedTerminal}">
+        <mat-card-header class="px-4 text-lg">
+            <div class="w-full flex justify-between" >
+                <p class=" font-semibold">{{pc.name}}</p>
+                <p class=" text-gray-800">{{pc.ip}}:<span class=" text-gray-400">{{pc.port}}</span></p>
+    
+                <!-- On/Off -->
+                <div>
+                    <span *ngIf="pc.statusOn" class=" text-green-500">On</span>
+                    <span *ngIf="!pc.statusOn" class=" text-red-500">Off</span>
+                </div>
+            </div>
+        </mat-card-header>
+        <mat-card-content>
+            <!-- time: 00:00:00 -->
+            <div class="flex justify-center">
+                <p class="text-2xl ">00:00:00</p>
+            </div>
+    
+            <div class="flex flex-col justify-center gap-3">
+                <div class="flex justify-center gap-4">
+                    <!--Terminal icon -->
+                    <button (click)="onClickTerminal()">
+                        <mat-icon class=" text-gray-800">terminal</mat-icon>
+                    </button>
+                    <!-- Settings icon -->
+                    <app-settings-dialog [name]="pc.name" (eventSettingsData)="onSettings($event)"></app-settings-dialog>
+                </div>
+    
+                <mat-form-field class="flex"  *ngIf="isClickedTerminal">
+                    <mat-label>Typing your command...</mat-label>
+                    <div class="flex">
+
+                        <input matInput type="text" [(ngModel)]="command">
+                        <button class="pr-1" *ngIf="command" matSuffix mat-icon-button aria-label="Clear" (click)="command=''">
+                          <mat-icon [color]="'warn'">close</mat-icon>
+                        </button>
+                        <button class="pr-1" *ngIf="command" matSuffix mat-icon-button aria-label="Check" (click)="onExecuteCommand()">
+                            <mat-icon [color]="'primary'">check</mat-icon>
+                        </button>
+                    </div>
+    
+                </mat-form-field>
+            </div>
+    
+        </mat-card-content>
+    </mat-card>
+</div>
